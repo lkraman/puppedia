@@ -1,0 +1,19 @@
+{
+  "name": "blocipedia-node",
+  "version": "1.0.0",
+  "description": "A Wiki-like application for users to create, collaborate, and share wikis.",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "set NODE_ENVtest&& jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lkraman/blocipedia-node.git"
+  },
+  "author": "Laura Kraman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lkraman/blocipedia-node/issues"
+  },
+  "homepage": "https://github.com/lkraman/blocipedia-node#readme"
+}
