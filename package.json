@@ -2,10 +2,12 @@
   "name": "blocipedia-node",
   "version": "1.0.0",
   "description": "A Wiki-like application for users to create, collaborate, and share wikis.",
-  "main": "src/server.js",
   "scripts": {
-    "test": "set NODE_ENV=test && jasmine",
-    "start": "node src/server.js"
+    "test": "set NODE_ENV=test&& jasmine",
+    "start": "node src/server.js",
+    "engines": {
+      "node": "10.x.x"
+    }
   },
   "repository": {
     "type": "git",
@@ -21,16 +23,20 @@
     "jasmine": "^3.4.0"
   },
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "@sendgrid/mail": "^6.4.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
     "ejs": "^2.6.1",
     "express": "^4.17.1",
-    "expressjs": "^1.0.1",
+    "express-flash": "0.0.2",
+    "express-session": "^1.16.1",
+    "express-validator": "^5.3.1",
     "faker": "^4.1.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
     "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.2",
     "request": "^2.88.0",
