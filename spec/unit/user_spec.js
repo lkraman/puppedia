@@ -4,7 +4,7 @@ const User = require("../../src/db/models").User;
 describe("User", () => {
 
   beforeEach((done) => {
-// #1
+
     sequelize.sync({force: true})
     .then(() => {
       done();
@@ -17,13 +17,11 @@ describe("User", () => {
   });
 
   describe("#create()", () => {
-
-// #2
-    it("should create a User object with a valid username, email and password", (done) => {
+    it("should create a User object with a valid email and password", (done) => {
       User.create({
         username: "fakeusername",
         email: "user@example.com",
-        password: "1234567890"
+        password: "password"
       })
       .then((user) => {
         expect(user.username).toBe("fakeusername");
@@ -37,12 +35,11 @@ describe("User", () => {
       });
     });
 
-// #3
-    it("should not create a user with invalid username, email or password", (done) => {
+    it("should not create a user with invalid email", (done) => {
       User.create({
         username: "fakeusername",
-        email: "user@example.com",
-        password: "1234567890"
+        email: "invaliduser@example.com",
+        password: "password"
       })
       .then((user) => {
 
@@ -53,40 +50,35 @@ describe("User", () => {
         done();
       })
       .catch((err) => {
-// #4
-        expect(err.message).toContain("Validation error: must be a valid email");
+        expect(err.message).toContain("Validation error");
         done();
       });
     });
 
-    it("should not create a user with an username and email already taken", (done) => {
+    it("should not create a user with an email and username already taken", (done) => {
 
-// #5
       User.create({
         username: "fakeusername",
         email: "user@example.com",
-        password: "1234567890"
+        password: "passssword"
       })
       .then((user) => {
 
         User.create({
             username: "fakeusername",
             email: "user@example.com",
-          password: "nananananananananananananananana BATMAN!"
+            password: "password"
         })
         .then((user) => {
-
           // the code in this block will not be evaluated since the validation error
           // will skip it. Instead, we'll catch the error in the catch block below
           // and set the expectations there
-
           done();
         })
         .catch((err) => {
-          expect(err.message).toContain("Validation error");
+          expect(err.message).toContain("Validation error: A user with this e-mail address or username already exists.");
           done();
         });
-
         done();
       })
       .catch((err) => {
@@ -94,7 +86,6 @@ describe("User", () => {
         done();
       });
     });
-
   });
 
 });
