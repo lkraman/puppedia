@@ -6,7 +6,7 @@ const User = require("../../src/db/models").User;
 
 
 router.get("/users/sign_up", userController.signUp);
-router.post("/users/sign_up", userController.signUp);
+router.post("/users/sign_up", userController.create);
 
 module.exports = router;
 
