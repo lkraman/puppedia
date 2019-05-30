@@ -31,12 +31,12 @@ describe("routes : users", () => {
     });
   });
 
-  describe("POST /users/sign_up", () => {
+  describe("POST /users", () => {
     it("should create a new user with valid values and redirect", (done) => {
       const options = {
-        url: `${base}sign_up`,
+        url: base,
         form: {
-          username: "fakeusername",
+          username: "username",
           email: "user@example.com",
           password: "password"
         }
@@ -44,7 +44,7 @@ describe("routes : users", () => {
       request.post(options, (err, res, body) => {
         User.findOne({where: {email: "user@example.com"}})
         .then((user) => {
-          expect(user.username).toBe("fakeusername")
+          expect(user.username).toBe("username")
           expect(user.email).toBe("user@example.com");
           expect(user.id).toBe(1);
           done();
@@ -59,15 +59,15 @@ describe("routes : users", () => {
     it("should not create a user with invalid values and redirect", (done) => {
       request.post(
         {
-          url: `${base}sign_up`,
+          url: base,
           form: {
             username: "blah",
-            email: "nope",
+            email: "invalid",
             password: "password"
           }
         },
         (err, res, body) => {
-          User.findOne({where: {email: "nadda"}})
+          User.findOne({where: {email: "invalid"}})
           .then((user) => {
             expect(user).toBeNull();
             done();

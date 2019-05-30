@@ -1,42 +1,49 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <% include ../static/partials/head.ejs %>
-</head>
-<body>
-   <% include ../static/partials/navbar.ejs %>
+  <head>
 
-   <main class="container">
+    <% include ../static/partials/head.ejs %>
 
-     <% include ../static/partials/messages.ejs %>
+  </head>
+  <body>
 
-     <h2>Welcome to Blocipedia</h2>
-     <div class="row">
-       <div class="col-md-8">
-          <form method="POST" action="/users/sign_up">
-           <div class="form-group">
-             <label>Name:</label>
-             <input type="text" name="username" placeholder="Enter Username" class="form-control"/>
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+      <% include ../static/partials/messages.ejs %>
+
+      <h2>Welcome to Blocipedia</h2>
+
+         <div class="row">
+           <div class="col-md-8">
+             <form action="/users" method="POST">
+               <div class="form-group">
+                 <label>Username:</label>
+                 <input type="text" name="username" placeholder="Enter Username" class="form-control"/>
+                 <small class="text-muted" id="usernameHelp">Username must be at least 6 characters long</small>
+               </div>
+               <div class="form-group">
+                 <label>Email:</label>
+                 <input type="email" name="email" placeholder="Enter Email" class="form-control"/>
+                 <small class="text-muted" id="emailHelp">Must be a valid email</small>
+               </div>
+               <div class="form-group">
+                 <label>Password:</label>
+                 <input type="password" name="password" placeholder="Enter Password" class="form-control"/>
+                 <small class="text-muted" id="passwordHelp">Password must be at least 6 characters long and match confirmation below</small>
+               </div>
+               <div class="form-group">
+                 <label>Password:</label>
+                 <input type="password" name="password_conf" placeholder="Confirm Password" class="form-control"/>
+               </div><br/>
+               <input type="submit" value="Sign Up" class="btn btn-primary"/>
+             </form>
            </div>
-           <div class="form-group">
-             <label>Email:</label>
-             <input type="email" name="email" placeholder="Enter Email" class="form-control"/>
-           </div>
-           <div class="form-group">
-             <label>Password:</label>
-             <input type="password" name="password" placeholder="Enter Password" class="form-control"/>
-           </div>
-           <div class="form-group">
-             <label>Password:</label>
-             <input type="password" name="password_conf" placeholder="Enter Password confirmation" class="form-control"/>
-           </div><br/>
-           <input type="submit" value="Sign Up" class="btn btn-primary"/>
-         </form>
-       </div>
-     </div>
+         </div>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
 
-</body>
+  </body>
 </html>

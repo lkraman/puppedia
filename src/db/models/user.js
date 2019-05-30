@@ -3,20 +3,17 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     username: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isEmail: {msg: "Validation error: must be a valid email"}
-      }
+      allowNull: false
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     }
-  },{});
+  }, {});
   User.associate = function(models) {
    
   };

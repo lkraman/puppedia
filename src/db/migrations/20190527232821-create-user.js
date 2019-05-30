@@ -9,8 +9,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       username: {
-        type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
+        type: Sequelize.STRING
       },
       email: {
         allowNull: false,
@@ -18,14 +19,11 @@ module.exports = {
         validate: {
           isEmail: { msg: "must be a valid email" }
         },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.STRING
       },
-      role: {
-        type: Sequelize.INTEGER,
+      password: {
         allowNull: false,
-        defaultValue: 0
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -34,7 +32,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
     }
   });
   },

@@ -26,7 +26,7 @@ module.exports = {
         });
       }
     });
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    sgMail.setApiKey(process.env.SendGridApiKey);
     const msg = {
       to: "laurakraman01@gmail.com",
       from: "laurakraman01@gmail.com",

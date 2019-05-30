@@ -2,9 +2,7 @@ const sequelize = require("../../src/db/models/index").sequelize;
 const User = require("../../src/db/models").User;
 
 describe("User", () => {
-
   beforeEach((done) => {
-
     sequelize.sync({force: true})
     .then(() => {
       done();
@@ -13,19 +11,17 @@ describe("User", () => {
       console.log(err);
       done();
     });
-
   });
-  
 
   describe("#create()", () => {
-    it("should create a User object with a valid username and email", (done) => {
+    it("should create a User object with a valid email and password", (done) => {
       User.create({
-        username: "fakeusername",
+        username: "username",
         email: "user@example.com",
         password: "password"
       })
       .then((user) => {
-        expect(user.username).toBe("fakeusername");
+        expect(user.username).toBe("username");
         expect(user.email).toBe("user@example.com");
         expect(user.id).toBe(1);
         done();
@@ -36,45 +32,36 @@ describe("User", () => {
       });
     });
 
-    it("should not create a user with invalid email", (done) => {
+    it("should not create a user with an invalid email", (done) => {
       User.create({
-        username: "fakeusername",
-        email: "invaliduser@example.com",
+        username: "username",
+        email: "invalid email",
         password: "password"
       })
       .then((user) => {
-
-        // The code in this block will not be evaluated since the validation error
-        // will skip it. Instead, we'll catch the error in the catch block below
-        // and set the expectations there.
-
+        //should not execute
         done();
       })
       .catch((err) => {
-        expect(err.message).toContain("is not defined");
+        expect(err.message).toContain("Validation error: must be a valid email");
         done();
       });
     });
 
-
-    it("should not create a user with an email and username already taken", (done) => {
-
+    it("should not create a user with credentials that are already in use", (done) => {
       User.create({
-        username: "fakeusername",
+        username: "username",
         email: "user@example.com",
-        password: "passssword"
+        password: "password"
       })
       .then((user) => {
-
         User.create({
-            username: "fakeusername",
-            email: "user@example.com",
-            password: "password"
+          username: "username",
+          email: "user@example.com",
+          password: "anotherpassword"
         })
         .then((user) => {
-          // the code in this block will not be evaluated since the validation error
-          // will skip it. Instead, we'll catch the error in the catch block below
-          // and set the expectations there
+          //should not execute
           done();
         })
         .catch((err) => {
@@ -89,5 +76,5 @@ describe("User", () => {
       });
     });
   });
-
 });
+
