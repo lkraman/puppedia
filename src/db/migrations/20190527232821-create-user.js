@@ -9,9 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       username: {
+        type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
-        type: Sequelize.STRING
       },
       email: {
         allowNull: false,
@@ -19,11 +18,14 @@ module.exports = {
         validate: {
           isEmail: { msg: "must be a valid email" }
         },
-        type: Sequelize.STRING
-      },
       password: {
+        type: Sequelize.STRING,
         allowNull: false,
-        type: Sequelize.STRING
+      },
+      role: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,
@@ -33,7 +35,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    }
+  });
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('Users');

@@ -21,72 +21,63 @@ describe("routes : users", () => {
 
   });
 
-  describe("POST /users", () => {
+  describe("GET /users/sign_up", () => {
+    it("should render a view with a sign up form", (done) => {
+      request.get(`${base}sign_up`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain("Sign Up")
+        done();
+      });
+    });
+  });
 
-    it("should create a new user with valid username, email, password, and redirect", (done) => {
-
+  describe("POST /users/sign_up", () => {
+    it("should create a new user with valid values and redirect", (done) => {
       const options = {
-        url: base,
+        url: `${base}sign_up`,
         form: {
-          username: "username",
+          username: "fakeusername",
           email: "user@example.com",
-          password: "123456789"
+          password: "password"
         }
       }
-
-      request.post(options,
-        (err, res, body) => {
-
-      
-          User.findOne({
-              where: { 
-                username: "username",
-                email: "user@example.com",
-                password: "123456789"
-              }
-            })
-            .then((user) => {
-              expect(user.username).toBe("username");
-              expect(user.email).toBe("user@example.com");
-              expect(user.id).toBe(1);
-              done();
-            })
-            .catch((err) => {
-              console.log(err);
-              done();
-            });
-        }
-      );
+      request.post(options, (err, res, body) => {
+        User.findOne({where: {email: "user@example.com"}})
+        .then((user) => {
+          expect(user.username).toBe("fakeusername")
+          expect(user.email).toBe("user@example.com");
+          expect(user.id).toBe(1);
+          done();
+        })
+        .catch((err) => {
+          console.log(err);
+          done();
+        });
+      });
     });
 
-    it("should not create a new user with invalid attributes and redirect", (done) => {
-      request.post({
-          url: base,
+    it("should not create a user with invalid values and redirect", (done) => {
+      request.post(
+        {
+          url: `${base}sign_up`,
           form: {
             username: "blah",
-            email: "no",
-            password: "123456789"
+            email: "nope",
+            password: "password"
           }
         },
         (err, res, body) => {
-          User.findOne({
-              where: {
-                username: "blah",
-                email: "no"
-              }
-            })
-            .then((user) => {
-              expect(user).toBeNull();
-              done();
-            })
-            .catch((err) => {
-              console.log(err);
-              done();
-            });
+          User.findOne({where: {email: "nadda"}})
+          .then((user) => {
+            expect(user).toBeNull();
+            done();
+          })
+          .catch((err) => {
+            console.log(err);
+            done();
+          });
         }
       );
     });
-
   });
-
 });

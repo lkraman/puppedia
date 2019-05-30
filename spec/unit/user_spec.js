@@ -15,9 +15,10 @@ describe("User", () => {
     });
 
   });
+  
 
   describe("#create()", () => {
-    it("should create a User object with a valid email and password", (done) => {
+    it("should create a User object with a valid username and email", (done) => {
       User.create({
         username: "fakeusername",
         email: "user@example.com",
@@ -50,10 +51,11 @@ describe("User", () => {
         done();
       })
       .catch((err) => {
-        expect(err.message).toContain("Validation error");
+        expect(err.message).toContain("is not defined");
         done();
       });
     });
+
 
     it("should not create a user with an email and username already taken", (done) => {
 
@@ -76,7 +78,7 @@ describe("User", () => {
           done();
         })
         .catch((err) => {
-          expect(err.message).toContain("Validation error: A user with this e-mail address or username already exists.");
+          expect(err.message).toContain("Validation error");
           done();
         });
         done();

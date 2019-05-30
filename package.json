@@ -25,6 +25,8 @@
     "request": "^2.88.0"
   },
   "dependencies": {
+    "@sendgrid/client": "^6.4.0",
+    "@sendgrid/helpers": "^6.4.0",
     "@sendgrid/mail": "^6.4.0",
     "async": "^3.0.1",
     "bcryptjs": "^2.4.3",

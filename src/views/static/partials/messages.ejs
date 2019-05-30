@@ -5,19 +5,14 @@
         <span aria-hidden="true">&times;</span>
       </button>
       <% if(messages.error) { %>
-      Validation errors:
-      <ul>
-        <% messages.error.forEach((err) => { %>
-        <li>
-          <%= `${err.param} ${err.msg}` %>
-        </li>
-        <% }) %>
-      </ul>
-      <!-- #3 -->
-      <% } else { %>
-      <p>
-        <%= messages.notice %>
-      </p>
-      <% } %>
+        Validation errors:
+        <ul>
+          <% messages.error.forEach((err) => { %>
+            <li><%= `${err.param} ${err.msg}` %></li>
+          <% }) %>
+        </ul>
+     <% } else { %>
+       <p><%= messages.notice %></p>
+     <% } %>
     </div>
-    <% } %>
+ <% } %>

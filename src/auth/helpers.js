@@ -4,8 +4,8 @@ module.exports = {
 
   ensureAuthenticated(req, res, next) {
     if (!req.user){
-      req.flash("notice", "To get the full experience, you must create an account.")
-      return res.redirect("/users/sign_in");
+      req.flash("notice", "Validation error")
+      return res.redirect("/users/sign_up");
     } else {
       next();
     }
