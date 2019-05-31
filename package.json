@@ -4,10 +4,7 @@
   "description": "A Wiki-like application for users to create, collaborate, and share wikis.",
   "scripts": {
     "test": "set NODE_ENV=test&& jasmine",
-    "start": "node src/server.js",
-    "engines": {
-      "node": "10.x.x"
-    }
+    "start": "node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +17,7 @@
   },
   "homepage": "https://github.com/lkraman/blocipedia-node#readme",
   "devDependencies": {
+    "faker": "^4.1.0",
     "jasmine": "^3.4.0",
     "nodemon": "^1.19.1",
     "request": "^2.88.0"
@@ -35,7 +33,6 @@
     "express-flash": "0.0.2",
     "express-session": "^1.16.1",
     "express-validator": "^5.3.1",
-    "faker": "^4.1.0",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
