@@ -1,31 +1,26 @@
 const request = require("request");
 const server = require("../../src/server");
 const base = "http://localhost:3000/users/";
-const User = require("../../src/db/models").User;
 const sequelize = require("../../src/db/models/index").sequelize;
+const User = require("../../src/db/models").User;
 
 describe("routes : users", () => {
-
   beforeEach((done) => {
-
-    sequelize.sync({
-        force: true
-      })
-      .then(() => {
-        done();
-      })
-      .catch((err) => {
-        console.log(err);
-        done();
-      });
-
+    sequelize.sync({force: true})
+    .then(() => {
+      done();
+    })
+    .catch((err) => {
+      console.log(err);
+      done();
+    });
   });
 
   describe("GET /users/sign_up", () => {
     it("should render a view with a sign up form", (done) => {
       request.get(`${base}sign_up`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain("Sign Up")
+        expect(body).toContain("Welcome to Blocipedia")
         done();
       });
     });
@@ -36,7 +31,7 @@ describe("routes : users", () => {
       const options = {
         url: base,
         form: {
-          username: "username",
+          username: "lauraloo",
           email: "user@example.com",
           password: "password"
         }
@@ -44,7 +39,8 @@ describe("routes : users", () => {
       request.post(options, (err, res, body) => {
         User.findOne({where: {email: "user@example.com"}})
         .then((user) => {
-          expect(user.username).toBe("username")
+          expect(user).not.toBeNull();
+          expect(user.username).toBe("lauraloo")
           expect(user.email).toBe("user@example.com");
           expect(user.id).toBe(1);
           done();
