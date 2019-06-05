@@ -1,4 +1,7 @@
+const express = require("express");
+const router = express.Router();
 const wikiQueries = require("../db/queries.wikis.js");
+const userQueries = require("../db/queries.users.js");
 
 module.exports = {
   index(req, res, next) {
@@ -25,7 +28,7 @@ module.exports = {
     wikiQueries.addWiki(newWiki, (err, wiki) => {
       if(err) {
         console.log(err);
-        res.redirect(500, "/wikis/new");
+        res.redirect(500, "wikis/new");
       }
       else {
         res.redirect(303, `/wikis/${wiki.id}`);

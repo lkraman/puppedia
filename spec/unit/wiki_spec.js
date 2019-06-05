@@ -5,100 +5,66 @@ const Wiki = require("../../src/db/models").Wiki;
 describe("Wiki", () => {
 
   beforeEach((done) => {
-    this.user;
     this.wiki;
+    this.user;
 
-    sequelize.sync({
-      force: true
-    }).then((res) => {
-
+    sequelize.sync({force:true}).then((res) => {
       User.create({
-          username: "lauraloo",
-          email: "user@example.com",
-          password: "password"
+        username: "lauraloo",
+        email: "lauraloo@example.com",
+        password: "password"
+      })
+      .then((user) => {
+        this.user = user;
+
+        Wiki.create({
+          title: "Basenjis",
+          body: "They are known as the barkless dog",
+          userId: this.user.id
         })
-        .then((user) => {
-          this.user = user;
-          Wiki.create({
-              title: "Basenji",
-              body: "A Basenji is known as a barkless dog",
-              userId: this.user.id
-            })
-            .then((wiki) => {
-              this.wiki = wiki;
-              done();
-            })
-            .catch((err) => {
-              console.log(err);
-              done();
-            });
-          });
-        });
-      });
-    
-      describe("#create()", () => {
-        it("should create a wiki object with title, body and assigned user", (done) => {
-          Wiki.create({
-            _title: "Cats",
-            get title() {
-              return this._title;
-            },
-            set title(value) {
-              this._title = value;
-            },
-            body: "Cats can rotate their ears 180 degrees.",
-            userId: this.user.id
-          })
-          .then((wiki) => {
-            expect(wiki.title).toBe("Cats");
-            expect(wiki.body).toBe("Cats can rotate their ears 180 degrees.");
-            done();
-          })
-          .catch((err) => {
-            console.log(err);
-            done();
-          });
-        });
-    
-        it("should not create a wiki object with missing title or body", (done) => {
-          Wiki.create({
-            title: "Cats"
-          })
-          .then((wiki) => {
-            done();
-          })
-          .catch((err) => {
-            expect(err.message).toContain("Wiki.body cannot be null");
-            done();
-          });
-        });
-      });
-    
-      describe("#setUser()", () => {
-        it("should associate a wiki and a user together", (done) => {
-          User.create({
-            username: "fakeusername",
-            email: "fakeuser@example.com",
-            password: "123456"
-          })
-          .then((newUser) => {
-            expect(this.wiki.userId).toBe(this.user.id);
-            this.wiki.setUser(newUser)
-            .then((wiki) => {
-              expect(this.wiki.userId).toBe(newUser.id);
-              done();
-            });
-          });
-        });
-      });
-    
-      describe("#getUser()", () => {
-        it("should return the associated user", (done) => {
-          this.wiki.getUser()
-          .then((associatedUser) => {
-            expect(associatedUser.email).toBe("user@example.com");
-            done();
-          });
+        .then((wiki) => {
+          this.wiki = wiki;
+          done();
         });
       });
     });
+  });
+
+//wiki unit tests
+
+describe("#create()", () => {
+
+  it("should create a wiki object with a title, body, & privacy setting", (done) => {
+    Wiki.create({
+      title: "Basenjis",
+      body: "They are known as the barkless dog",
+      userId: this.user.id
+    })
+    .then((wiki) => {
+      expect(wiki.title).toBe("Basenjis");
+      expect(wiki.body).toBe("They are known as the barkless dog");
+      done();
+    })
+    .catch((err) => {
+      console.log(err);
+      done();
+    });
+  });
+
+  it("should not create a wiki object that doesn't have a title or description", (done) =>{
+    Wiki.create({
+
+    })
+    .then((wiki) => {
+      done();
+    })
+    .catch((err) => {
+      expect(err.message).toContain("Wiki.title cannot be null");
+      expect(err.message).toContain("Wiki.body cannot be null");
+      done();
+    });
+  });
+
+});
+
+})
