@@ -5,67 +5,66 @@ const Wiki = require("../../src/db/models").Wiki;
 describe("Wiki", () => {
 
   beforeEach((done) => {
-    this.user;
     this.wiki;
+    this.user;
 
-    sequelize.sync({
-      force: true
-    }).then((res) => {
-
+    sequelize.sync({force:true}).then((res) => {
       User.create({
-          username: "lauraloo",
-          email: "user@example.com",
-          password: "password"
+        username: "lauraloo",
+        email: "lauraloo@example.com",
+        password: "password"
+      })
+      .then((user) => {
+        this.user = user;
+
+        Wiki.create({
+          title: "Basenjis",
+          body: "They are known as the barkless dog",
+          userId: this.user.id
         })
-        .then((user) => {
-          this.user = user;
-          Wiki.create({
-              title: "Basenji",
-              body: "A Basenji is known as a barkless dog",
-              userId: this.user.id
-            })
-            .then((wiki) => {
-              this.wiki = wiki;
-              done();
-            });
-          });
+        .then((wiki) => {
+          this.wiki = wiki;
+          done();
         });
       });
-    
-      describe("#create()", () => {
-        it("should create a wiki object with a title, body", (done) => {
-          Wiki.create({
-            title: "Cats",
-            body: "Cats can turn their ears 180 degrees",
-            UserId: this.user.id
-          })
-          .then((wiki) => {
-            expect(wiki.title).toBe("Cats");
-            expect(wiki.body).toBe("Cats can turn their ears 180 degrees");
-            expect(wiki.UserId).toBe(this.user.id);
-            done();
-    
-          })
-          .catch((err) => {
-            console.log(err);
-            done();
-          });
-        });
-      });
-    
-      describe("#destroy()", () => {
-        it("should delete the specified wiki", (done) => {
-          Wiki.destroy({where: {id: this.wiki.id}})
-          .then((wiki) => {
-            expect(wiki.title).toBe(undefined);
-            done();
-    
-          })
-          .catch((err) => {
-            console.log(err);
-            done();
-          });
-        });
-      });
-    
     });
+  });
+
+//wiki unit tests
+
+describe("#create()", () => {
+
+  it("should create a wiki object with a title, body, & privacy setting", (done) => {
+    Wiki.create({
+      title: "Basenjis",
+      body: "They are known as the barkless dog",
+      userId: this.user.id
+    })
+    .then((wiki) => {
+      expect(wiki.title).toBe("Basenjis");
+      expect(wiki.body).toBe("They are known as the barkless dog");
+      done();
+    })
+    .catch((err) => {
+      console.log(err);
+      done();
+    });
+  });
+
+  it("should not create a wiki object that doesn't have a title or description", (done) =>{
+    Wiki.create({
+
+    })
+    .then((wiki) => {
+      done();
+    })
+    .catch((err) => {
+      expect(err.message).toContain("Wiki.title cannot be null");
+      expect(err.message).toContain("Wiki.body cannot be null");
+      done();
+    });
+  });
+
+});
+
+})

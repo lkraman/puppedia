@@ -1,6 +1,9 @@
+const express = require("express");
+const router = express.Router();
 const userQueries = require("../db/queries.users.js");
+const wikiQueries = require("../db/queries.wikis.js");
 const passport = require("passport");
-const sgMail = require("@sendgrid/mail");
+const sgMail = require('@sendgrid/mail');
 
 module.exports = {
   signUp(req, res, next) {
@@ -26,9 +29,9 @@ module.exports = {
         const msg = {
           to: newUser.email,
           from: 'laurakraman01@gmail.com',
-          subject: 'May31 test for Blocipedia',
-          text: 'test',
-          html: '<strong>test!</strong>',
+          subject: 'Welcome to Blocipedia',
+          text: 'Thank you for signing up',
+          html: '<strong>Thank you for signing up</strong>',
         };
         sgMail.send(msg);
 

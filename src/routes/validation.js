@@ -29,7 +29,8 @@ module.exports = {
 		const errors = req.validationErrors();
 
 		if (errors) {
-			req.flash('error', errors);
+      req.flash('error', errors);
+      console.log("validation ERRROOOORRRRR")
 			return res.redirect(req.headers.referer);
 		} else {
 			return next();
