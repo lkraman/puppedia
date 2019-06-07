@@ -73,7 +73,6 @@ describe("routes : wikis", () => {
         Wiki.findOne({where: {title: "Cats"}})
         .then((wiki) => {
           expect(wiki.title).toBe("Cats");
-          expect(wiki.body).toBe("Cats can turn their ears 180 degrees");
           expect(wiki.userId).not.toBeNull();
           done();
         })
