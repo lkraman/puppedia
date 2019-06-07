@@ -17,15 +17,9 @@ describe("User", () => {
     it("should create a User object with a valid email and password", (done) => {
       User.create({
         username: "lauraloo",
-        _email: "user@example.com",
-        get email() {
-          return this._email;
-        },
-        set email(value) {
-          this._email = value;
-        },
+        email: "user@example.com",
         password: "password"
-      })
+    })
       .then((user) => {
         expect(user.username).toBe("lauraloo");
         expect(user.email).toBe("user@example.com");

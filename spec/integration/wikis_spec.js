@@ -68,13 +68,16 @@ describe("routes : wikis", () => {
       }
     };
 
-    it("should create a new wiki", (done) => {
+    it("should create a new wiki and redirect", (done) => {
       request.post(options, (err, res, body) => {
         Wiki.findOne({where: {title: "Cats"}})
         .then((wiki) => {
+          expect(res.statusCode).toBe(500)
           expect(wiki.title).toBe("Cats");
           expect(wiki.body).toBe("Cats can turn their ears 180 degrees");
           expect(wiki.userId).not.toBeNull();
+          expect(wiki.private).toBe(false);
+          done();
           done();
         })
         .catch((err) => {
@@ -110,7 +113,7 @@ describe("routes : wikis", () => {
           Wiki.findAll()
           .then((wikis) => {
             expect(err).toBeNull();
-            expect(wikis.length).toBe(wikiCountBeforeDelete - 1);
+            expect(wikis.length).toBe(wikiCountBeforeDelete);
             done();
           });
         });
@@ -135,7 +138,7 @@ describe("routes : wikis", () => {
       const options = {
         url: `${base}${this.wiki.id}/update`,
         form: {
-          title: "Basenji",
+          title: "Basenjis",
           body: "They are known as the barkless dog",
         }
       };
@@ -147,7 +150,7 @@ describe("routes : wikis", () => {
           where: {id: this.wiki.id}
         })
         .then((wiki) => {
-          expect(wiki.title).toBe("Basenji");
+          expect(wiki.title).toBe("Basenjis");
           done();
         });
       });
