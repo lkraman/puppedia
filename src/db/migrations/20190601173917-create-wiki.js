@@ -9,13 +9,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       body: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       private: {
+        allowNull: false,
+        defaultValue: false,
         type: Sequelize.BOOLEAN
+
       },
       createdAt: {
         allowNull: false,
