@@ -70,6 +70,7 @@ describe("routes : wikis", () => {
   });
 
   describe("POST /wikis/create", () => {
+<<<<<<< HEAD
 
     it("should create a new wiki and redirect", (done) => {
       const options = {
@@ -94,6 +95,31 @@ describe("routes : wikis", () => {
             });
         }
       );
+=======
+    const options = {
+      url: `${base}create`,
+      form: {
+        title: "Cats",
+        body: "Cats can turn their ears 180 degrees",
+        userId: 1,
+        private: false
+      }
+    };
+
+    it("should create a new wiki", (done) => {
+      request.post(options, (err, res, body) => {
+        Wiki.findOne({where: {title: "Cats"}})
+        .then((wiki) => {
+          expect(wiki.title).toBe("Cats");
+          expect(wiki.userId).not.toBeNull();
+          done();
+        })
+        .catch((err) => {
+          console.log(err);
+          done();
+        });
+      });
+>>>>>>> master
     });
 
     it("should not create a new wiki that fails validation", (done) => {
