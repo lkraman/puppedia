@@ -40,8 +40,8 @@ module.exports = {
         });
       }
     });
-  }
-}
+  },
+
 
   signIn(req, res, next) {
     passport.authenticate("local")(req, res, function () {
@@ -59,7 +59,5 @@ module.exports = {
     req.logout();
     req.flash("notice", "You've successfully signed out!");
     res.redirect("/");
-  },
-
-
+  }
 }
