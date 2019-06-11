@@ -42,7 +42,6 @@ module.exports = {
     });
   },
 
-
   signIn(req, res, next) {
     passport.authenticate("local")(req, res, function () {
       if (!req.user) {
