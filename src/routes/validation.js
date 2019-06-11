@@ -3,10 +3,10 @@
 module.exports = {
   validateUsers(req, res, next) {
     if(req.method === "POST") {
-      req.checkBody("username", "must be at least 6 characters in length").isLength({min: 6});
-      req.checkBody("email", "must be valid").isEmail();
-      req.checkBody("password", "must be at least 6 characters in length").isLength({min: 6});
-      req.checkBody("passwordConfirmation", "must match password provided").optional().matches(req.body.password);
+      req.checkBody("username", "Username must be at least 6 characters in length").isLength({min: 6});
+      req.checkBody("email", "Must be a valid email").isEmail();
+      req.checkBody("password", "Password must be at least 6 characters long and match confirmation below").isLength({min: 6});
+      req.checkBody("passwordConfirmation", "Must match password provided").optional().matches(req.body.password);
     }
 
     const errors = req.validationErrors();
@@ -22,7 +22,7 @@ module.exports = {
 
 	validateUsersSignIn(req, res, next) {
 		if (req.method === 'POST') {
-      req.checkBody("email", "must be valid").isEmail();
+      req.checkBody("email", "must be a valid email").isEmail();
 			req.checkBody('password', 'must be at least 6 characters in length').isLength({ min: 6 });
 		}
 

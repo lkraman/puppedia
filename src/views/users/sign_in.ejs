@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-
     <% include ../static/partials/head.ejs %>
-
   </head>
   <body>
 
@@ -15,7 +13,8 @@
 
       <h1>Sign In</h1>
 
-      <form action="/users/sign_in" method="POST">
+      <form action="/users/sign_in" method="post">
+
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -31,7 +30,6 @@
         <button type="submit" class="btn btn-primary">Sign in</button>
       </form>
     </main>
-
 
     <% include ../static/partials/baseScripts.ejs %>
 
