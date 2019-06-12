@@ -48,7 +48,7 @@ describe("User", () => {
         done();
       })
       .catch((err) => {
-        expect(err.message).toContain("Validation error: Must be at least 5 characters");
+        expect(err.message).toContain("Validation error: Must be at least 6 characters");
         done();
       });
     });
