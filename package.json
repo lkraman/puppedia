@@ -2,9 +2,13 @@
   "name": "blocipedia-node",
   "version": "1.0.0",
   "description": "A Wiki-like application for users to create, collaborate, and share wikis.",
+  "main": "src/server.js",
   "scripts": {
     "test": "set NODE_ENV=test&& jasmine",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "engines": {
+      "node": "12.x.x"
+    }
   },
   "repository": {
     "type": "git",
@@ -42,8 +46,5 @@
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.8.8",
     "sequelize-cli": "^5.4.0"
-  },
-  "engines": {
-    "node": "12.x.x"
   }
 }
