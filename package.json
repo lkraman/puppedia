@@ -5,10 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "test": "set NODE_ENV=test&& jasmine",
-    "start": "node src/server.js",
-    "engines": {
-      "node": "10.x.x"
-    }
+    "start": "node src/server.js"
   },
   "repository": {
     "type": "git",
