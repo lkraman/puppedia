@@ -1,39 +1,43 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    username: {
+  var User = sequelize.define('User', {
+    name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isEmail: {msg: 'must be a valid email!'}
+      }
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     role: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 0
+      defaultValue: "standard"
     }
   }, {});
   User.associate = function(models) {
     User.hasMany(models.Wiki, {
-      foreignKey: "userId",
-      as: "wikis"
+      foreignKey: 'userId',
+      as: 'wikis'
     });
   };
 
   User.prototype.isAdmin = function() {
-    return this.role === 2;
+    return this.role === 'admin';
   };
-
   User.prototype.isPremium = function() {
-    return this.role === 1;
+    return this.role === 'premium';
+  };
+  User.prototype.isOwner = function(userId) {
+    return this.id === userId;
   };
   
-    return User;
+  return User;
 };
- 
