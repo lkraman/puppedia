@@ -87,9 +87,8 @@ describe("routes : wikis", () => {
         (err, res, body) => {
           Wiki.findOne({ where: { title: "New Wiki Title" } })
             .then((wiki) => {
-              expect(wiki.title).toBe("New Wiki Title");
-              expect(wiki.body).toBe("Please enter body of new wiki");
-              done();
+              expect(wiki).toBeNull();
+                done();
             })
             .catch((err) => {
               console.log(err);
@@ -186,7 +185,7 @@ describe("routes : wikis", () => {
             where: { id: this.wiki.id }
           })
             .then((wiki) => {
-              expect(wiki.title).toBe("Updated Wiki Title");
+              expect(wiki.title).not.toBe("Updated Wiki Title");
               done();
             });
         });
