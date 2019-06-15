@@ -17,7 +17,13 @@ describe("User", () => {
     it("should create a User object with a valid email and password", (done) => {
       User.create({
         username: "lauraloo",
-        email: "user@example.com",
+        _email: "user@example.com",
+        get email() {
+          return this._email;
+        },
+        set email(value) {
+          this._email = value;
+        },
         password: "password"
       })
       .then((user) => {

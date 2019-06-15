@@ -1,112 +1,70 @@
 const sequelize = require("../../src/db/models/index").sequelize;
-const Wiki = require("../../src/db/models").Wiki;
 const User = require("../../src/db/models").User;
-
-
+const Wiki = require("../../src/db/models").Wiki;
 
 describe("Wiki", () => {
 
   beforeEach((done) => {
-     this.wiki;
-     this.user;
+    this.wiki;
+    this.user;
 
-     sequelize.sync({force: true}).then((res) => {
+    sequelize.sync({force:true}).then((res) => {
+      User.create({
+        username: "lauraloo",
+        email: "lauraloo@example.com",
+        password: "password"
+      })
+      .then((user) => {
+        this.user = user;
 
-// #2
-       User.create({
-         username: "username",
-         email: "starman@tesla.com",
-         password: "Trekkie4lyfe"
-       })
-       .then((user) => {
-         this.user = user; //store the user
-
-         Wiki.create({
-           title: "Expeditions to Alpha Centauri",
-           body: "A compilation of reports from recent visits to the star system.",
-           userId: this.user.id
-          })
-          .then((wiki) => {
-            this.wiki = wiki;
-            done();
-          })
-          .catch((err) => {
-            console.log(err);
-            done();
-          });
-        })
-      });
-    });
-
-  describe("#create()", () => {
-
-    it("should create a wiki object with a title and body", (done) => {
-
-      Wiki.create({
-          title: "Expeditions to Alpha Centauri",
-          body: "A compilation of reports from recent visits to the star system.",
+        Wiki.create({
+          title: "Basenjis",
+          body: "They are known as the barkless dog",
           userId: this.user.id
         })
         .then((wiki) => {
-
-          //#2
-          expect(wiki.title).toBe("Expeditions to Alpha Centauri");
-          expect(wiki.body).toBe("A compilation of reports from recent visits to the star system.");
-          done();
-
-        })
-        .catch((err) => {
-          console.log(err);
+          this.wiki = wiki;
           done();
         });
-    });
-    it("should not create a wiki with missing title, body or assigned user", (done) => {
-      Wiki.create({
-        title:"Wiki Title Test"
-      })
-      .then((wiki) => {
-        //validation error will skip this
-        done();
-      })
-      .catch((err) => {
-        expect(err.message).toContain("Wiki.body cannot be null");
-        expect(err.message).toContain("Wiki.userId cannot be null");
-        done();
       });
     });
   });
- });
 
+//wiki unit tests
 
- describe("#setUser()", () => {
+describe("#create()", () => {
 
-  it("should associate a wiki and a user together", (done) => {
-
-    User.create({
-      username: "username",
-      email: "starman@tesla.com",
-      password: "Trekkie4lyfe"
+  it("should create a wiki object with a title, body, & privacy setting", (done) => {
+    Wiki.create({
+      title: "Basenjis",
+      body: "They are known as the barkless dog",
+      userId: this.user.id
     })
-    .then((newUser) => {
-
-      expect(this.wiki.userId).toBe(this.user.id);
-      this.wiki.setUser(newUser)
-      .then((wiki) => {
-        expect(this.wiki.userId).toBe(newUser.id);
-        done();
-
-      });
+    .then((wiki) => {
+      expect(wiki.title).toBe("Basenjis");
+      expect(wiki.body).toBe("They are known as the barkless dog");
+      done();
     })
+    .catch((err) => {
+      console.log(err);
+      done();
+    });
   });
+
+  it("should not create a wiki object that doesn't have a title or description", (done) =>{
+    Wiki.create({
+
+    })
+    .then((wiki) => {
+      done();
+    })
+    .catch((err) => {
+      expect(err.message).toContain("Wiki.title cannot be null");
+      expect(err.message).toContain("Wiki.body cannot be null");
+      done();
+    });
+  });
+
 });
-  describe("#getUser()", () => {
 
-    it("should return the associated user", (done) => {
-
-      this.wiki.getUser()
-      .then((associatedUser) => {
-        expect(associatedUser.email).toBe("starman@tesla.com");
-        done();
-        });
-    });
-  });
+})
