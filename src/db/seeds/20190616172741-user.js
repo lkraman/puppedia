@@ -1,20 +1,18 @@
 'use strict';
-const wikis = [];
+const faker = require('faker');
 
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-for (i = 1; i <= 10; i++) {
-  wikis.push({
-    title: faker.hacker.noun(),
-    body: faker.hacker.phrase(),
-    private: false,
-    userId: getRandomInt(1, 10),
+const users = [];
+for (let i = 1; i <= 10; i++) {
+  users.push({
+    username: faker.name.findName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
     createdAt: new Date(),
     updatedAt: new Date(),
+    role: 0,
   });
 }
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     /*

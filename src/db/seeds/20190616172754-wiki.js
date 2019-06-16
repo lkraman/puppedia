@@ -1,16 +1,17 @@
 'use strict';
 
-const faker = require('faker');
+const faker = require("faker");
 
-const users = [];
-for (let i = 1; i <= 10; i++) {
-  users.push({
-    userName: faker.internet.userName(),
-    email: faker.internet.email(),
-    password: faker.internet.password(),
+let wikis = [];
+
+for(let i = 1 ; i <= 15 ; i++){
+  wikis.push({
+    title: faker.random.words(),
+    body: faker.lorem.sentence(),
+    private: false,
     createdAt: new Date(),
     updatedAt: new Date(),
-    role: 0,
+    userId: 1
   });
 }
 
