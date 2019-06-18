@@ -3,39 +3,51 @@
   <head>
     <% include ./partials/head.ejs %>
   </head>
-  <body>
-      <!-- Navigation -->
-      <% include ./partials/navbar.ejs %>
-
-      <!-- Main Container -->
-      <main class="container">
-
-        <!-- Jumbotron -->
-        <header class="jumbotron my-4">
-          <h1 class="display-3">Blocipedia: Social, Markdown Wikis</h1>
-          <p class="lead">Create and share Markdown Wikis</p>
+<body>
+   <!-- Navigation -->
+   <% include ./partials/navbar.ejs %>
+   <main class="main-container">
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <header>
+    <div class="jumbotron">
+      <div class="container">
+        <h1 class="display-3">Puppedia: All Dog Wikis</h1>
+        <p class="lead">Create and share Markdown Wikis about your Favorite Dog Breeds</p>
+        <div class="card-img-overlay">
+            <img src="../static/partials/Basenji.png" class="card-img" alt="Basenji">           
+          </div>
+        <% if (!currentUser) { %>
           <a href="/users/sign_up" class="btn btn-primary btn-lg">Sign up</a>
-        </header>
+        <% } %>
+    </div>
+    </header>
 
-        <!-- Columns with Pricing Structure -->
-        <section class="row text-center">
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Free Plan</h2>
+          <p class="card-text">Create as many public wikis as you want! Upgrade at anytime!</p>
+          <p><a class="btn btn-default" href="/users/sign_up" role="button">View details &raquo;</a></p>
+         
+        </div>
+        <div class="col-md-6">
+          <h2>Premium Plan</h2>
+          <p class="card-text">Create private wikis!</p>
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+       </div>
+      </div>
 
-          <section class="col-lg-6">
-            <h4 class="card-title">Free Plan</h4>
-            <p class="card-text">Create as many public wikis as you want!</p>
-          </section>
+      <hr>
+</div>
+      <footer>
+        <p>&copy; 2016 Company, Inc.</p>
+      </footer>
+    </main>
+    <!-- /.container -->
 
-          <section class="col-lg-6">
-            <h4 class="card-title">Premium Plan</h4>
-            <p class="card-text">Create private wikis!</p>
-          </section>
-
-        </section>
-        <!-- /.row -->
-
-      </main>
-      <!-- /.container -->
-
-      <% include ./partials/baseScripts.ejs %>
-    </body>
+    <% include ./partials/baseScripts.ejs %>
+  </body>
 </html>
+
+   

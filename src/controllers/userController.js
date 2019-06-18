@@ -1,6 +1,8 @@
 const userQueries = require("../db/queries.users.js");
 const passport = require("passport");
 const sgMail = require("@sendgrid/mail");
+const stripe = require('stripe')('sk_test_pV36PHtvf07fwqhXrfngSmKY00pts2UQK1');
+const keyPublishable = 'pk_test_81nUK1O4tD2VhKyRjkoiCD0a00qa5CUcDZ';
 
 module.exports = {
   signUp(req, res, next) {
@@ -58,5 +60,41 @@ module.exports = {
     req.logout();
     req.flash("notice", "You've successfully signed out!");
     res.redirect("/");
-  }
-}
+  },
+
+  upgradeForm(req, res, next) {
+    res.render('users/upgrade');
+  },
+  downgradeForm(req, res, next) {
+    res.render('users/downgrade');
+  },
+  upgrade(req, res, next) {
+    const token = req.body.stripeToken;
+    const charge = stripe.charges.create({
+      amount: 1500,
+      currency: 'usd',
+      description: 'Account upgrade to premium',
+      source: token,
+    });
+    userQueries.upgradeUser(req, (err, user) => {
+      if (err) {
+        req.flash('error', err);
+        res.redirect('/users/upgrade');
+      } else {
+        req.flash('notice', 'Your account is now premium!');
+        res.redirect('/');
+      }
+    });
+  },
+  downgrade(req, res, next) {
+    userQueries.downgradeUser(req, (err, user) => {
+      if (err) {
+        req.flash('error', err);
+        res.redirect('/users/downgrade');
+      } else {
+        req.flash('notice', 'You have downgraded your account.');
+        res.redirect('/');
+      }
+    });
+  },
+};

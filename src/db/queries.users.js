@@ -19,5 +19,35 @@ module.exports = {
           callback(err);
         })
 
-    }
-}
+    },
+
+    upgradeUser(req, callback) {
+        return User.findOne({ where: { id: req.user.id } }).then((user) => {
+          if (user) {
+            user.update({ role: 1 }).then((updatedUser) => {
+              callback(null, updatedUser);
+            })
+              .catch((err) => {
+                callback(err);
+              });
+          } else {
+            return callback('No user found.');
+          }
+        });
+      },
+
+      downgradeUser(req, callback) {
+        return User.findOne({ where: { id: req.user.id } }).then((user) => {
+          if (user) {
+            user.update({ role: 0 }).then((updatedUser) => {
+              callback(null, updatedUser);
+            })
+              .catch((err) => {
+                callback(err);
+              });
+          } else {
+            callback('No user found.');
+          }
+        });
+      },
+    };
