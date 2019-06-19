@@ -1,7 +1,38 @@
-
-.main-container {
-  margin-top: 50px;
-  margin-bottom: 0px;
+body {
+  padding-top: 70px;
+  padding-bottom: 20px;
 }
+
+
+.jumbotron {
+ 
+  height: 25rem;
+  width: 100%;
+  z-index: 0;
+}
+
+.jumbotron .img-fluid {
+  
+  position: relative;
+  z-index: 10;
+  opacity: 1.0;
+  margin-top: 0%; 
+  margin-left: 600px
+}
+
+.container {
+  margin-top: 20px;
+  }
+
+.feature-row {
+  display: flex;
+    flex-wrap: wrap;
+    margin-right: -12px;
+    margin-left: -12px;
+}
+   
+
+
+
 
 

@@ -6,40 +6,47 @@
 <body>
    <!-- Navigation -->
    <% include ./partials/navbar.ejs %>
-   <main class="main-container">
+   <main>
+   
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <header>
-    <div class="jumbotron">
+    <header class="jumbotron">
+    
       <div class="container">
         <h1 class="display-3">Puppedia: All Dog Wikis</h1>
         <p class="lead">Create and share Markdown Wikis about your Favorite Dog Breeds</p>
-        <div class="card-img-overlay">
-            <img src="../static/partials/Basenji.png" class="card-img" alt="Basenji">           
+        <div class="img-fluid">
+            <img src="../images/greydog.png" class="greydog-img" alt="Grey Dog">           
           </div>
+          <div>
         <% if (!currentUser) { %>
           <a href="/users/sign_up" class="btn btn-primary btn-lg">Sign up</a>
         <% } %>
+        </div>
     </div>
+  
     </header>
 
-    <div class="container">
+    
       <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-6">
-          <h2>Free Plan</h2>
-          <p class="card-text">Create as many public wikis as you want! Upgrade at anytime!</p>
-          <p><a class="btn btn-default" href="/users/sign_up" role="button">View details &raquo;</a></p>
-         
-        </div>
-        <div class="col-md-6">
-          <h2>Premium Plan</h2>
-          <p class="card-text">Create private wikis!</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-       </div>
-      </div>
+      
+      <div class="container">
+          <!-- Example row of columns -->
+          <div class="feature-row">
+            <div class="col-md-6">
+              <h2>Free Plan</h2>
+              <p class="card-text">Create as many public wikis as you want! Upgrade at anytime!</p>
+              <p><a class="btn btn-default" href="/users/sign_up" role="button">View details &raquo;</a></p>
+             
+            </div>
+            <div class="col-md-6">
+              <h2>Premium Plan</h2>
+              <p class="card-text">Create private wikis!</p>
+              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+           </div>
+          </div>
+    
+          <hr>
 
-      <hr>
-</div>
       <footer>
         <p>&copy; 2019 PuppyLove, Inc.</p>
       </footer>
