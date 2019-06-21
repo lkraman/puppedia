@@ -10,22 +10,35 @@
    
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <header class="jumbotron">
-    
-      <div class="container">
+      <div>
         <h1 class="display-3">Puppedia: All Dog Wikis</h1>
-        <p class="lead">Create and share Markdown Wikis about your Favorite Dog Breeds</p>
-        <div class="img-fluid">
-            <img src="../images/greydog.png" class="greydog-img" alt="Grey Dog">           
-          </div>
+          <p class="lead">Create and share Markdown Wikis about your Favorite Dog Breeds</p>
           <div>
-        <% if (!currentUser) { %>
-          <a href="/users/sign_up" class="btn btn-primary btn-lg">Sign up</a>
-        <% } %>
-        </div>
-    </div>
-  
-    </header>
+              <a href="/users/sign_up" class="btn btn-primary btn-lg">Sign up</a>  
+            </div>
 
+              <div class="img-fluid">
+                <img src="../images/basset-hound.png" class="dog-background-img" alt="Grey Dog">           
+              </div>
+            </div>
+        <div class="jumbotron-content">
+            <h1>All bark with a little bite!</h1>
+            <p class="jumbotron-lg-only">Serious dog lovers only</p>
+            <form name="user-info">
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" name="email" class="form-control" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" class="form-control" placeholder="Password">
+              </div>
+              <a href="#" class="btn btn-primary btn-large">Sign Up</a><a href="#" class="pull-right btn btn-default">Sign In</a>
+            </form>
+          </div>
+    </header>
+     
+<hr>
     
       <!-- Example row of columns -->
       

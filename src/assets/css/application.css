@@ -1,23 +1,33 @@
 body {
-  padding-top: 70px;
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  height: 100%;
+  padding-top: 50px;
   padding-bottom: 20px;
 }
 
 
+.container {
+  margin-top: 50px;
+
+  }
+
 .jumbotron {
- 
-  height: 25rem;
-  width: 100%;
-  z-index: 0;
+  margin-top: 20px;
+  position: relative;
+  min-height: 400px;
+  max-width: 100%;
+  background-size: 100%;
+  padding: 40px;
 }
 
 .jumbotron .img-fluid {
-  
-  position: relative;
+  position: absolute;
+  top: 80px;
+  left: 40%;
+  right: 40%;
   z-index: 10;
-  opacity: 1.0;
-  margin-top: 0%; 
-  margin-left: 600px
+  
 }
 
 .container {
@@ -26,13 +36,116 @@ body {
 
 .feature-row {
   display: flex;
-    flex-wrap: wrap;
-    margin-right: -12px;
-    margin-left: -12px;
+  flex-wrap: wrap;
+
 }
-   
+
+.col-md-6 {
+  position: relative;
+  z-index: 15;
+}
+
+.header-container .btn {
+  position: absolute;
+}
+
+
+h2 { margin: 0; }
 
 
 
+
+
+.jumbotron-content {
+ 
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0px 15px;
+  width: 25%;
+  height: 100%;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.5);
+  
+}
+
+.jumbotron-content h1 {
+  text-align: center;
+  color: #fff;
+  font-size: 1.75em;
+  margin: 10px;
+}
+
+
+.jumbotron-lg-only {
+  text-align: center;
+
+}
+
+.jumbotron p {
+  margin-top: 20px;
+  color: rgb(0, 0, 0);
+  font-size: 1.2em;
+}
+
+.jumbotron-content label {
+  color: #fff;
+}
+
+.jumbotron .btn {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  padding: 5px 5%;
+  margin: 0 3%;
+}
+
+
+@media(min-width: 992px) {
+  .jumbotron .btn {
+    padding: 5px 10%;
+  }
+}
+
+@media(max-width: 991px) {
+  .jumbotron-content {
+    position: absolute;
+    height: 100%;
+  }
+
+}
+
+@media(max-width: 768px) {
+  .jumbotron {
+    background-size: 100% 100%;
+  }
+
+  .jumbotron-content {
+    top: 0;
+    height: 100%;
+    width: 37%;
+  }
+  
+  .jumbotron .btn {
+    color: rgb(7, 34, 239);
+    font-size: 0.85em;
+    padding: 8px 5%;
+    max-width: 65px;
+  }
+}
+
+@media(min-device-width: 320px) and (max-device-width: 568px) {
+  .jumbotron {
+    min-height: 275px;
+  }
+
+  .jumbotron-content {
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+ 
+}
 
 
