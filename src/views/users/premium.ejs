@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../static/partials/head.ejs %>
+</head>
+
+<body>
+
+  <% include ../static/partials/navbar.ejs %>
+  <main class="container">
+
+    <% include ../static/partials/messages.ejs %>
+
+
+    <% if (currentUser.role === 0 || currentUser.role === 2) { %>
+    <header class="jumbotron my-4"></header>
+    <form action='/users/<%= currentUser.id %>/premium' method="POST">
+      <div class="main-title">
+        <br>
+        <h2>One step closer to becoming a Premium Customer!</h2>
+        <p class="lead">Start colaborating with others and creating your very own private wikis now! </p>
+        <br>
+        <h1 class="display-4">Only $15/mo.</h1>
+        <br>
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="pk_test_81nUK1O4tD2VhKyRjkoiCD0a00qa5CUcDZ" data-amount="1500" data-name="Upgrade account"
+          data-description="Upgrade account to premium" data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+          data-locale="auto">
+          </script>
+        <br>
+        <br>
+      </div>
+    </form>
+    </header>
+    <% } %>
+
+    <% if (currentUser.role === 1 || currentUser.role === 2) { %>
+    <header class="jumbotron my-4"></header>
+    <div class="main-title">
+      <br>
+      <h2 class="display-4">Thank you for being a Premium Customer!</h2>
+      <br>
+      <p class="lead">(However, you are free to downgrade at any time)</p>
+      <br>
+      <br>
+    </div>
+    </header>
+    <% } %>
+
+  </main>
+
+
+
+
+  <% include ../static/partials/baseScripts.ejs %>
+</body>
+
+</html>

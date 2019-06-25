@@ -1,17 +1,19 @@
+    
 const express = require("express");
 const router = express.Router();
 const validation = require("./validation");
-const userController = require("../controllers/userController")
+
+const userController = require("../controllers/userController");
 
 router.get("/users/sign_up", userController.signUp);
-router.get('/users/sign_in', userController.signInForm);
-router.get('/users/sign_out', userController.signOut);
-router.get('/users/:id/upgrade', userController.upgradeForm);
-router.get('/users/:id/downgrade', userController.downgradeForm);
+router.post("/users", validation.validateUsers, userController.create);
+router.get("/users/sign_in", userController.signInForm);
+router.post("/users/sign_in", validation.validateUsers, userController.signIn);
+router.get("/users/sign_out", userController.signOut);
 
-router.post('/users/sign_in', validation.validateUsersSignIn, userController.signIn);
-router.post('/users', validation.validateUsers, userController.create);
-router.post('/users/:id/upgrade', userController.upgrade);
-router.post('/users/:id/downgrade', userController.downgrade);
+router.get("/users/premium", userController.premiumForm);
+router.post(`/users/:id/premium`, userController.premium);
+router.get("/users/standard", userController.standardForm);
+router.post(`/users/:id/standard`, userController.standard);
 
 module.exports = router;

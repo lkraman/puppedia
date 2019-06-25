@@ -1,30 +1,83 @@
-<!DOCTYPE html>
 <html>
-  <head>
 
-    <% include ../static/partials/head.ejs %>
+<head>
+  <% include ../static/partials/head.ejs %>
+</head>
 
-  </head>
-  <body>
+<body>
+  <% include ../static/partials/navbar.ejs %>
 
-    <% include ../static/partials/navbar.ejs %>
+  <main class="container">
+    <h1 class="wiki-show-header"><%- wiki.title %></h1>
 
-    <main class="container">
-      <h1><%= wiki.title %></h1>
-      
-      <% if(currentUser) { %>
-        <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
-        <% if((currentUser.id === wiki.userId) || (currentUser.role == 1)) { %>
-        <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
-          <button type="submit" class="btn btn-danger">Delete</button>
-          <a href="/wikis/" class="btn btn-info">Back to Wikis</a>
-        </form>
-        <% } %>
+    <p><%- wiki.body %></p>
+
+    <br>
+    <!-- Edition/deletion is available for all signed in users -->
+    <% if(currentUser) { %>
+    <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
+    <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
+      <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+    <% if(currentUser.role == 1 || currentUser.role == 2) { %>
+    <!-- List collaborators. Only for roles premium and admin -->
+    <br>
+    <br>
+    <div id="collaborators-list">
+      <ul class="list-group">
+        <h2 class="wiki-edit-header">Wiki Collaborators</h2>
+        <% if(!wiki.collaborators.length) { %>
+        <small class="text-muted" id="usernameHelp">No collaborators for this wiki have been added yet.</small>
+        <% } else { %>
+        <% wiki.collaborators.forEach((collaborator) => { %>
+        <li class="list-group-item">
+          <form style="display:initial" action="/wikis/<%= wiki.id%>/collaborators/<%= collaborator.userId %>/remove"
+            method="post">
+            <!--
+            <button type="submit" class="btn btn-danger">Remove</button>
+            <input type="text" class="form-control" value="John Doe" style="text-align: center"
+              aria-label="Text input with checkbox" readonly="readonly">
+            -->
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center"></li>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <button type="submit" class="btn btn-danger">Remove</button>
+                  </div>
+                </div>
+                <input type="text" class="form-control" value="<%= `${collaborator.userId}` %>"
+                  style="text-align: center" aria-label="Text input with checkbox" readonly="readonly">
+              </div>
+        </li>
+      </ul>
+      </form>
+      </li>
+      <% }) %>
       <% } %>
-      <p><%= wiki.body %></p>
-    </main>
+      </ul>
+    </div>
+    <!-- Add collaborators input form. Only for roles premium and admin -->
+    <br>
+    <br>
+    <br>
+    <div id="adding-collaborators">
+      <form action="/wikis/<%= wiki.id %>/collaborators/add" method="post">
+        <label for="addCollaborator">Need to add collaborators? Add them here: </label>
+        <br>
+        <br>
+        <input style="width:300px" type="text" class="form-control" name="addCollaborator"
+          aria-describedby="addCollaboratorHelp" placeholder="Enter collaborator's email">
+        <br>
+        <button type="submit" class="btn btn-success">Add Collaborator</button>
+      </form>
+    </div>
+    <% } %>
+    <% } %>
+  </main>
 
-    <% include ../static/partials/baseScripts.ejs %>
+  <% include ../static/partials/baseScripts.ejs %>
 
-  </body>
+</body>
+
 </html>

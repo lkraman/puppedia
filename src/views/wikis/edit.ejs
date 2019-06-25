@@ -1,31 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
 
-    <% include ../static/partials/head.ejs %>
+<head>
+  <% include ../static/partials/head.ejs %>
+</head>
 
-  </head>
-  <body>
+<body>
+  <% include ../static/partials/navbar.ejs %>
+  <% include ../static/partials/messages.ejs %>
 
-    <% include ../static/partials/navbar.ejs %>
+  <main class="container">
 
-    <main class="container">
-      <h1>Edit Wiki</h1>
-      <form action="/wikis/<%= wiki.id %>/update" method="post">
-        <div class="form-group">
-          <label for="title">Wiki title</label>
-          <input value="<%= wiki.title %>" type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter Title">
-        </div>
-        <div class="form-group">
-          <label for="body">Body</label>
-          <textarea rows="15" class="form-control" name="body" placeholder="Enter Body"><%= wiki.body %></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="/wikis/" class="btn btn-info">Back to Wikis</a>
-      </form>
-    </main>
+    <!-- Edit the title and the body of the wiki-->
+    <h1 class="wiki-edit-header">Edit Wiki</h1>
 
-    <% include ../static/partials/baseScripts.ejs %>
+    <form action="/wikis/<%= wiki.id %>/update" method="post">
 
-  </body>
+      <!-- All signed in users are able to edit public wikis -->
+      <div class="form-group">
+        <label for="title">Wiki title</label>
+        <input value="<%= wiki.title %>" type="text" class="form-control" name="title" aria-describedby="titleHelp"
+          placeholder="Enter title">
+      </div>
+      <div class="form-group">
+        <label for="body">Wiki body</label>
+        <textarea rows="4" class="form-control" name="body" placeholder="Enter Description"><%= wiki.body %></textarea>
+      </div>
+
+      <!-- Standard user will only see the update button to edit the wiki -->
+      <% if(currentUser && currentUser.role === 0) { %>
+      <br>
+      <button type="submit" class="btn btn-primary">Update Wiki</button>
+      <% } %>
+
+      <!-- Premium and Admin users will see: -->
+      <!-- 1. Privacy settings for the wiki -->
+      <!-- 2. A collaborators section -->
+      <% if(currentUser.role === 1 || currentUser.role === 2) {%>
+      <div class="form-group">
+        <input type="radio" name="private" value="true"> Private
+        <br>
+        <input type="radio" name="private" value="false" checked="checked"> Public
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Update Wiki</button>
+      </div>
+      <%  } %>
+    </form>
+
+  </main>
+
+  <% include ../static/partials/baseScripts.ejs %>
+</body>
+
 </html>

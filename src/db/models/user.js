@@ -3,41 +3,48 @@ module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
     username: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
+
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isEmail: {msg: 'must be a valid email!'}
+        isEmail: { msg: "must be a valid email" }
       }
     },
+
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
+
     role: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
     }
   }, {});
-  User.associate = function(models) {
+  User.associate = function (models) {
+    // associations can be defined here
     User.hasMany(models.Wiki, {
-      foreignKey: 'userId',
-      as: 'wikis'
+      foreignKey: "userId",
+      as: "wikis"
     });
+
+    User.hasMany(models.Collaborator, {
+      foreignKey: "userId",
+      as: "collaborators"
+    })
   };
 
-  User.prototype.isAdmin = function() {
-    return this.role === 'admin';
+  User.prototype.isPremium = function () {
+    return this.role === 1;
   };
-  User.prototype.isPremium = function() {
-    return this.role === 'premium';
+
+  User.prototype.isAdmin = function () {
+    return this.role === 2;
   };
-  User.prototype.isOwner = function(userId) {
-    return this.id === userId;
-  };
-  
+
   return User;
 };

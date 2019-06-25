@@ -20,15 +20,25 @@ describe("Wiki", () => {
         Wiki.create({
           title: "Basenjis",
           body: "They are known as the barkless dog",
+          private: false,
           userId: this.user.id
         })
         .then((wiki) => {
           this.wiki = wiki;
           done();
+        })
+        .catch((err) => {
+          console.log(err);
+          done();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        done();
         });
       });
     });
-  });
+ 
 
 //wiki unit tests
 
@@ -38,6 +48,7 @@ describe("#create()", () => {
     Wiki.create({
       title: "Basenjis",
       body: "They are known as the barkless dog",
+      private: false,
       userId: this.user.id
     })
     .then((wiki) => {
@@ -51,7 +62,7 @@ describe("#create()", () => {
     });
   });
 
-  it("should not create a wiki object that doesn't have a title or description", (done) =>{
+  it("should not create a wiki object that doesn't have a title, describing body, privacy setting, and associated user", (done) =>{
     Wiki.create({
 
     })
@@ -61,10 +72,42 @@ describe("#create()", () => {
     .catch((err) => {
       expect(err.message).toContain("Wiki.title cannot be null");
       expect(err.message).toContain("Wiki.body cannot be null");
+      expect(err.message).toContain("Wiki.private cannot be null");
+      expect(err.message).toContain("Wiki.userId cannot be null");
       done();
+    })
+  });
+
+  describe("#setUser()", () => {
+    it("should associate a wiki and a user together", (done) => {
+      User.create({
+        username: "lauraloo",
+        email: "lauraloo@example.com",
+        password: "password"
+      })
+        .then((newUser) => {
+          expect(this.wiki.userId).toBe(this.user.id);
+          this.wiki.setUser(newUser)
+            .then((wiki) => {
+              expect(wiki.userId).toBe(newUser.id);
+              done();
+            });
+        })
     });
   });
 
+  describe("#getUser()", () => {
+    it("should return the associated user", (done) => {
+      this.wiki.getUser()
+        .then((associatedUser) => {
+          expect(associatedUser.username).toBe("lauraloo");
+          done();
+        })
+        .catch((err) => {
+          console.log(err);
+          done();
+        });
+    });
+  });
 });
-
-})
+});

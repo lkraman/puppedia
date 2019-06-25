@@ -1,42 +1,50 @@
 module.exports = class ApplicationPolicy {
-  constructor(user, record){
+
+  constructor(user, record, collaborator = null) {
     this.user = user;
     this.record = record;
+    this.collaborator = collaborator;
   }
 
-  _isOwner(){
+
+  _isCollaborator() {
+    return this.collaborator;
+  }
+
+  _isOwner() {
     return this.record && (this.record.userId == this.user.id);
   }
 
-  _isAdmin(){
-    return this.user && this.user.role == 'admin';
+  _isAdmin() {
+    return this.user && this.user.role == 2;
   }
 
-  _isPremium(){
-    return this.user && this.user.role == 'premium';
+  _isPremium() {
+    return this.user && this.user.role == 1;
   }
 
-  new(){
+  new() {
     return this.user != null;
   }
 
-  create(){
+  create() {
     return this.new();
   }
 
-  show(){
+  show() {
     return true;
   }
 
-  edit(){
-    return this.new() && this.record;
+  edit() {
+    return this.new() &&
+      this.record && (this._isOwner() || this._isAdmin() || this._isCollaborator());
   }
 
-  update(){
-    return this.edit() && this.record;
+  update() {
+    return this.edit();
   }
 
-  destroy(){
-    return this.new() && this.record && (this._isOwner() || this._isAdmin());
+  destroy() {
+    return this.update();
   }
 }

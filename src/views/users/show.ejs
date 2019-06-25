@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% cinclude ../static/partials/head.ejs %>
+</head>
+
+<body>
+  <% include ../static/partials/navbar.ejs %>
+
+  <main class="container">
+
+    <% include ../static/partials/messages.ejs %>
+
+    <h1><% `${user.username}'s profile` %></h1>
+    <hr>
+
+    <section class="wikis-list">
+      <h2>My Wikis</h2>
+      <ul class="list-group">
+        <% let count = 0; %>
+        <% user.wikis.forEach((wiki) => { %>
+        <% count++; %>
+        <li class="list-group-item">
+          <a href="/users/wikis/<%= wiki.id %>"> <% `${count}. ${wiki.title}` %> </a>
+        </li>
+        <% }) %>
+      </ul>
+      <p><% `Total wikis: ${count}` %></p>
+      <a href="/users/wikis/new" class="btn btn-success">New Wiki</a>
+    </section>
+
+
+  </main>
+
+  <% include ../static/partials/baseScripts.ejs %>
+
+</body>
+
+</html>

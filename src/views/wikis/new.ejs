@@ -1,30 +1,42 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <% include ../static/partials/head.ejs %>
-  </head>
-  <body>
 
-    <% include ../static/partials/navbar.ejs %>
+<head>
+  <% include ../static/partials/head.ejs %>
+</head>
 
-    <main class="container">
+<body>
+  <% include ../static/partials/navbar.ejs %>
 
-    <h1>New Wiki</h1>
+  <main class="container">
+
+    <h1 class="new-wiki-header">New Wiki</h1>
 
     <form action="/wikis/create" method="post">
       <div class="form-group">
-        <label for="title">Wiki Title</label>
-         <input type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter Title">
+        <label for="title">Wiki title</label>
+        <input type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter title">
       </div>
       <div class="form-group">
-          <label for="body">Body</label>
-          <textarea rows="4" class="form-control" name="body" placeholder="Enter Body"></textarea>
+        <label for="body">Wiki body</label>
+        <textarea rows="4" class="form-control" name="body" aria-describedby="bodyHelp"
+          placeholder="Enter wiki body"></textarea>
       </div>
-       <button type="submit" class="btn btn-primary">Submit</button>
-       <a href="/wikis/" class="btn btn-info">Back to Wikis</a>
-    </main>
 
-    <% include ../static/partials/baseScripts.ejs %>
+      <% if(currentUser.role === 1 || currentUser.role === 2) {%>
+      <div class="form-group">
+        <input type="radio" name="private" value="true"> Private
+        <br>
+        <input type="radio" name="private" value="false" checked="checked"> Public
+      </div>
+      <% } %>
 
-  </body>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </main>
+
+  <% include ../static/partials/baseScripts.ejs %>
+
+</body>
+
 </html>

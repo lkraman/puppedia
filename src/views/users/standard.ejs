@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../static/partials/head.ejs %>
+</head>
+
+<body>
+
+  <% include ../static/partials/navbar.ejs %>
+  <main class="container">
+
+    <% include ../static/partials/messages.ejs %>
+
+
+    <% if (currentUser.role === 0 || currentUser.role === 2) { %>
+    <header class="jumbotron my-4"></header>
+    <form action='/users/<%= currentUser.id %>/premium' method="POST">
+      <div class="main-title">
+        <br>
+        <h2>You already have access to the Free Plan.</h2>
+        <p class="lead">You can become a PREMIUM member at any time! </p>
+        <br>
+        <h1 class="display-4">For only $15/mo.</h1>
+        <br>
+        <a href="/users/premium" class="btn btn-primary btn-lg">Go Premium</a>
+        <br>
+        <br>
+      </div>
+    </form>
+    </header>
+    <% } %>
+
+
+    <% if (currentUser.role === 1 || currentUser.role === 2) { %>
+    <header class="jumbotron my-4"></header>
+    <form action='/users/<%= currentUser.id %>/standard' method="POST">
+      <div class="main-title">
+        <br>
+        <h2 class="display-4">Thank you for being a Premium Customer!</h2>
+        <p class="lead">You are free to downgrade at any time.</p>
+        <br>
+        <h3>If you no longer need private wikis and close collaboration with others then...</h3>
+        <p class="lead">(Be aware that all your wikis will become public.)</p>
+        <br>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+          Go Free
+        </button>
+        <!-- <button type="submit" class="btn btn-primary">Go Free</button> -->
+        <br>
+        <br>
+        <br>
+      </div>
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Downgrade Confirmation</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p><strong>Do you really want to downgrade to the Free Plan?</strong></p>
+              <p>Please be aware that once downgrading, ALL your wikis will become public!</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="confirm" class="btn btn-primary">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    </header>
+    <% } %>

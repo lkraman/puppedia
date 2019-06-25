@@ -1,21 +1,19 @@
 const ApplicationPolicy = require("./application");
+const Collaborator = require("../db/models").Collaborator;
 
 module.exports = class WikiPolicy extends ApplicationPolicy {
 
-  _isOwner() {
-    return this.record && (this.record.userId == this.user.id);
+  constructor(user, wiki, collaborator = null) {
+    super(user, wiki);
+    this.collaborator = collaborator;
   }
 
-  _isAdmin() {
-    return this.user && this.user.role == "admin";
-  }
-
-  _isPremium() {
-    return this.user && this.user.role == "premium";
+  _isCollaborator() {
+    return this.collaborator;
   }
 
   new() {
-    return this.user != null;
+    return this._isAdmin() || this._isPremium();
   }
 
   create() {
@@ -23,11 +21,11 @@ module.exports = class WikiPolicy extends ApplicationPolicy {
   }
 
   show() {
-    return true;
+    return this._isAdmin() || this._isOwner() || this._isCollaborator();
   }
 
   edit() {
-    return this.new();
+    return this.show();
   }
 
   update() {
@@ -35,6 +33,6 @@ module.exports = class WikiPolicy extends ApplicationPolicy {
   }
 
   destroy() {
-    return this.update();
+    return this._isOwner() || this._isAdmin();
   }
 }

@@ -1,5 +1,7 @@
-const User = require("./models").User;
-const Wiki = require("./models").Wiki;
+const User = require("../../src/db/models").User;
+const Wiki = require("../../src/db/models").Wiki;
+const Authorizer = require("../policies/application");
+
 
 module.exports = {
   getAllWikis(callback) {
@@ -26,7 +28,8 @@ module.exports = {
     return Wiki.create({
       title: newWiki.title,
       body: newWiki.body,
-      userId: newWiki.userId
+      userId: newWiki.userId,
+      private: newWiki.private
     })
     .then((wiki) => {
       callback(null, wiki);
@@ -38,32 +41,49 @@ module.exports = {
 
   deleteWiki(req, callback) {
     return Wiki.findByPk(req.params.id)
-    .then((wiki) => {
-      wiki.destroy()
-      .then((res) => {
-        callback(null, wiki);
-      });
-    })
-    .catch((err) => {
-      callback(err);
-    })
-  },
+      .then((wiki) => {
 
-  updateWiki(req, updatedWiki, callback) {
-    return Wiki.findByPk(req.params.id)
-    .then((wiki) => {
-      if(!wiki) {
-        return callback("Wiki not found");
-      }
-      wiki.update(updatedWiki, {
-        fields: Object.keys(updatedWiki)
-      })
-      .then(() => {
-        callback(null, wiki);
+        const authorized = new Authorizer(req.user, wiki).destroy();
+
+        if (authorized) {
+          wiki.destroy()
+            .then((res) => {
+              callback(null, wiki);
+            })
+        } else {
+          req.flash("notice", "You are not authorized to do that.")
+          callback(401);
+        }
       })
       .catch((err) => {
         callback(err);
       });
-    });
+  },
+
+  updateWiki(req, updatedWiki, callback) {
+    return Wiki.findByPk(req.params.id)
+      .then((wiki) => {
+        if (!wiki) {
+          return callback("Wiki not found");
+        }
+
+        const authorized = new Authorizer(req.user, wiki).update();
+
+        if (authorized) {
+
+          wiki.update(updatedWiki, {
+            fields: Object.keys(updatedWiki)
+          })
+            .then(() => {
+              callback(null, wiki);
+            })
+            .catch((err) => {
+              callback(err);
+            });
+        } else {
+          req.flash("notice", "You are not authorized to do that.");
+          callback("Forbidden");
+        }
+      });
   }
 }
