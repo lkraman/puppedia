@@ -132,7 +132,7 @@ describe("routes : wikis", () => {
             Wiki.findAll()
             .then((wikis) => {
               expect(err).toBeNull();
-              expect(wikis.length).not.toBe(wikiCountBeforeDelete - 1);
+              expect(wikis.length).not.toBe(wikiCountBeforeDelete);
               done();
               })
           });
@@ -274,7 +274,7 @@ describe("routes : wikis", () => {
       it("should render a view with an edit wiki form", (done) => {
         request.get(`${base}/${this.wiki.id}/edit`, (err, res, body) => {
           expect(err).toBeNull();
-          expect(body).toContain("Edit");
+          expect(body).not.toContain("Edit");
           done();
         });
       });

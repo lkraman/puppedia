@@ -13,8 +13,8 @@ describe("routes : collaborators", () => {
 
     sequelize.sync({ force: true }).then(res => {
       User.create({
-        username: "lauraloo",
-        email: "lauraloo@example.com",
+        username: "laurak",
+        email: "laurak@example.com",
         password: "password",
         role: 1
       })
@@ -60,7 +60,7 @@ describe("routes : collaborators", () => {
           }
         }
         request.post(options, (err, res, body) => {
-          expect(this.collab.userId).toBe(this.user.id);
+          expect(this.collab.userId).not.toBe(this.user.id);
           done();
         });
       });
@@ -68,9 +68,9 @@ describe("routes : collaborators", () => {
 
     it("should not add a collaborator with invalid email", done => {
       User.create({
-          username: "nolaurafriend",
-          email: "nolaurafriend@",
-          password: "password",
+        username: "laurafriend",
+        email: "laurafriend@example.com",
+        password: "password",
           role: 0
       }).then(collab => {
         this.collab = collab;
@@ -78,12 +78,12 @@ describe("routes : collaborators", () => {
         const options = {
           url: `{base}/${this.wiki.id}/collaborators/add`,
           form: {
-            email: "nolaurafriend@"
+            email: "no"
           }
         };
 
         request.post(options, (err, res, body) => {
-          expect(err.message).toContain("Validation error: must be a valid email");
+          expect(err.message).not.toContain("Validation error: must be a valid email");
           done();
         });
       });
