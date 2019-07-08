@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Wiki.hasMany(models.Collaborator, {
-      foreignKey: "wikiId",
+      foreignKey: "userId",
       as: "collaborators"
     });
   };

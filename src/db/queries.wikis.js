@@ -17,7 +17,7 @@ module.exports = {
       ]
     })
       .then((wikis) => {
-        callback(null, wiki);
+        callback(null, wikis);
       })
       .catch((err) => {
         callback(err);

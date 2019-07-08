@@ -6,15 +6,16 @@ const markdown = require("markdown").markdown;
 
 module.exports = {
 
-  index(req, res, next) {
-    wikiQueries.getAllWikis((err, wikis) => {
-      if (err) {
-        res.redirect(500, "static/index");
-
-      } else {
-        res.render("/wikis", { wikis });
+  index(req,res,next){
+    if (req.user){
+    wikiQueries.getAllWikis(req, (err, result) => {
+        if (err){
+            res.redirect(500, "static/index");
+        } else {
+            res.render("wikis/index", { wikis })
       }
     })
+  }
   },
 
   new(req, res, next) {
